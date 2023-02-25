@@ -195,4 +195,15 @@ let lastTime = 0;
 function update(time = 0){
     const deltaTime = time - lastTime;
     dropCounter += deltaTime
+    if(dropCounter > dropInterval){
+        playerDrop();
+    }
+    lastTime = time;
+    draw();
+    requestAnimationFrame(update);
+}
+
+function updateScore(){
+
+    document.getElementById("score").innerText = "Score : " + player.score;
 }
