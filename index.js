@@ -210,15 +210,15 @@ function updateScore(){
 
 document.addEventListener("keydown", (event) =>{
 
-    if(event.keyCode === 37){
+    if(event.keyCode === 37){           // 왼쪽 화살표(왼쪽으로 이동)
         playerMove(-1);
-    }else if(event.keyCode === 39){
+    }else if(event.keyCode === 39){     // 오른쪽 화살표(오른쪽으로 이동)
         playerMove(1);
-    }else if(event.keyCode === 40){
+    }else if(event.keyCode === 40){     // 아래쪽 화살표(밑으로 빠르게 이동)
         playerDrop();
-    }else if(event.keyCode === 90){
+    }else if(event.keyCode === 90){     // Z(왼쪽으로 돌리기)
         playerRotate(-1);
-    }else if(event.keyCode === 88){
+    }else if(event.keyCode === 88){     // X(오른쪽으로 돌리기)
         playerRotate(1);
     }
 });
