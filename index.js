@@ -216,9 +216,9 @@ document.addEventListener("keydown", (event) =>{
         playerMove(1);
     }else if(event.keyCode === 40){
         playerDrop();
-    }else if(event.keyCode === 81){
+    }else if(event.keyCode === 90){
         playerRotate(-1);
-    }else if(event.keyCode === 87){
+    }else if(event.keyCode === 88){
         playerRotate(1);
     }
 });
