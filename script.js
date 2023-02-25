@@ -71,7 +71,7 @@ function createPiece(type){
             [4, 4],
             [4, 4]
         ];
-    }else if(type === "2"){
+    }else if(type === "Z"){
         return[
             [5, 5, 0],
             [0, 5, 5],
@@ -113,6 +113,7 @@ function draw(){
 }
 
 function merge(arena, player){
+    
     player.matrix.forEach((row, y) =>{
         row.forEach((value, x) => {
             if(value !== 0){
@@ -124,6 +125,7 @@ function merge(arena, player){
 }
 
 function rotate(matrix, dir){
+
     for(let y = 0; y < matrix.length; ++y){
         for(let x = 0; x < y; ++x){
             [matrix[x][y], matrix[y][x]] = [matrix[y][x], matrix[x][y]];
@@ -136,3 +138,36 @@ function rotate(matrix, dir){
     }
 }
 
+function playerDrop(){
+
+    player.pos.y++;
+    if(collide(arena, player)){
+        player.pos.y--;
+        merge(arena, player);
+        playerReset();
+        arenaSweep();
+        updateScore();
+    }
+    dropCounter = 0;
+}
+
+function playerMove(offset){
+
+    player.pos.x += offset;
+    if(collide(arena, player)){
+        player.pos.x -= offset;
+    }
+}
+
+function playerReset(){
+
+    const pieces = "TJLOSZI";
+    player.matrix = createMatrix(pieces[(pieces.length * Math.random()) | 0]);
+    player.pos.y = 0;
+    player.pos.x = ((arena[0].length / 2) | 0) - ((player.matrix[0] /2) | 0);
+    if(collide(arena, player)){
+        arena.forEach((row) => row.fill(0));
+        player.score = 0;
+        updateScore();
+    }
+}
