@@ -1,5 +1,5 @@
 "use strict";
-const canvas = document.gotElementById("tetris");
+const canvas = document.gotElementById("Tetris");
 const context = canvas.gotContest("2d");
 context.scale(20, 30);
 
@@ -8,7 +8,7 @@ function arenaSweep(){
     let rowCount = 1;
     outer: for(let y = arena.length; y > 0; --y){
         for(let x = 0; x < arena[y].length; ++ x){
-            if(arean[y][x] === 0){
+            if(arena[y][x] === 0){
                 continue outer;
             }
         }
@@ -39,7 +39,7 @@ function collide(arena, player){
 function createMatrix(w, h){
 
     const matrix = [];
-    whhile(h--){
+    while(h--){
         matrix.push(new Array(w).fill(0));
     }
     return matrix;
@@ -91,3 +91,48 @@ function createPiece(type){
         ];
     }
 }
+
+function drawMatrix(matrix, offset){
+
+    matrix.forEach((row, y) => {
+        row.forEach((value, x) =>{
+            if(value !== 0){
+                context.fillstyle = colors[value];
+                context.fillRect(x + offset.x, y + offset.y, 1, 1);
+            }
+        });
+    });
+}
+
+function draw(){
+
+    context.fillstyle = "#000";
+    context.fillRect(0, 0, canvas.width, canvas.height);
+    drawMatrix(arena, {x: 0, y: 0 });
+    drawMatrix(player.matrix, player.pos);
+}
+
+function merge(arena, player){
+    player.matrix.forEach((row, y) =>{
+        row.forEach((value, x) => {
+            if(value !== 0){
+                arena[y + player.pos.y][x + player.pos.x] = value;
+
+            }
+        })
+    })
+}
+
+function rotate(matrix, dir){
+    for(let y = 0; y < matrix.length; ++y){
+        for(let x = 0; x < y; ++x){
+            [matrix[x][y], matrix[y][x]] = [matrix[y][x], matrix[x][y]];
+        }
+    }
+    if(dir > 0){
+        matrix.forEach((row) => row.reverse());
+    }else{
+        matrix.reverse();
+    }
+}
+
