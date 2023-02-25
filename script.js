@@ -6,7 +6,7 @@ context.scale(20, 30);
 function arenaSweep(){
 
     let rowCount = 1;
-    outer: for(let y = arena.length; y > 0; --y){
+    outer: for(let y = arena.length - 1; y > 0; --y){
         for(let x = 0; x < arena[y].length; ++ x){
             if(arena[y][x] === 0){
                 continue outer;
@@ -164,7 +164,7 @@ function playerReset(){
     const pieces = "TJLOSZI";
     player.matrix = createMatrix(pieces[(pieces.length * Math.random()) | 0]);
     player.pos.y = 0;
-    player.pos.x = ((arena[0].length / 2) | 0) - ((player.matrix[0] /2) | 0);
+    player.pos.x = ((arena[0].length / 2) | 0) - ((player.matrix[0].length /2) | 0);
     if(collide(arena, player)){
         arena.forEach((row) => row.fill(0));
         player.score = 0;
@@ -207,3 +207,39 @@ function updateScore(){
 
     document.getElementById("score").innerText = "Score : " + player.score;
 }
+
+document.addEventListener("keydown", (event) =>{
+
+    if(event.keyCode === 37){
+        playerMove(-1);
+    }else if(event.keyCode === 39){
+        playerMove(1);
+    }else if(event.keyCode === 40){
+        playerDrop();
+    }else if(event.keyCode === 81){
+        playerRotate(-1);
+    }else if(event.keyCode === 87){
+        playerRotate(1);
+    }
+});
+
+const colors = [
+    null,
+    "#ff0d72",
+    "#0dc2ff",
+    "#0dff72",
+    "#f538ff",
+    "#ff8e0d",
+    "#ffe138",
+    "#3877ff"
+];
+
+const arena = createMatrix(12, 20);
+const player = {
+    pos: {x: 0, y: 0},
+    matrix: null,
+    score: 0
+};
+playerReset();
+updateScore();
+update();
